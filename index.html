@@ -249,72 +249,50 @@ nav{
 }
 .project-card.visible{opacity:1;transform:translateY(0)}
 
-/* ── MacBook shell ── */
-.macbook-wrap{position:relative;padding:0 0 6px;user-select:none}
-
-.macbook-screen{
-  background:linear-gradient(145deg,var(--macbook-bezel) 0%,var(--macbook-screen) 100%);
-  border-radius:18px 18px 0 0;
-  border:1.5px solid var(--border2);border-bottom:none;
-  padding:28px 22px 18px;
+/* ── Clean video card ── */
+.video-wrap{
   position:relative;
+  border-radius:14px;
+  overflow:hidden;
+  aspect-ratio:16/9;
+  background:#000;
   box-shadow:var(--shadow);
-  transition:transform 0.5s var(--ease),box-shadow 0.5s var(--ease),background 0.4s;
+  transition:transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+  cursor:pointer;
 }
-.project-card:hover .macbook-screen{
-  transform:translateY(-6px) scale(1.004);
+.project-card:hover .video-wrap{
+  transform:translateY(-4px);
   box-shadow:var(--shadow-hover);
 }
 
-.macbook-camera{
-  position:absolute;top:11px;left:50%;transform:translateX(-50%);
-  width:7px;height:7px;border-radius:50%;
-  background:var(--macbook-inner);
-  border:1px solid rgba(100,130,200,0.2);
-  box-shadow:inset 0 0 3px rgba(0,0,0,0.5);
-}
-
-/* ── Video display ── */
-.macbook-display{
-  border-radius:8px;overflow:hidden;
-  aspect-ratio:16/10;background:var(--macbook-inner);
-  position:relative;border:1px solid rgba(0,0,0,0.3);
-  cursor:pointer;
-}
-.macbook-display video{
+.video-wrap video{
   width:100%;height:100%;object-fit:cover;display:block;
-  transition:transform 0.4s var(--ease);
 }
 
-/* Hover-to-play overlay */
+/* Overlay */
 .play-overlay{
   position:absolute;inset:0;
   display:flex;align-items:center;justify-content:center;
-  background:rgba(10,16,36,0.35);
-  backdrop-filter:blur(1px);
-  opacity:1;transition:opacity 0.35s, background 0.3s;
+  background:rgba(0,0,0,0.28);
+  transition:background 0.3s, opacity 0.3s;
 }
 .play-overlay.playing{
   background:transparent;
-  backdrop-filter:none;
 }
 .play-overlay.playing .play-btn{
   opacity:0;transform:scale(0.7);pointer-events:none;
 }
-/* Show controls hint on hover when playing */
-.macbook-display:hover .play-overlay.playing{
-  background:rgba(10,16,36,0.2);
+.video-wrap:hover .play-overlay.playing{
+  background:rgba(0,0,0,0.15);
 }
-.macbook-display:hover .play-overlay.playing .pause-hint{
-  opacity:1;
-}
+.video-wrap:hover .play-overlay.playing .pause-hint{opacity:1}
 
 .play-btn{
   width:64px;height:64px;border-radius:50%;
-  background:rgba(59,130,246,0.88);
+  background:rgba(59,130,246,0.9);
   display:flex;align-items:center;justify-content:center;
   box-shadow:0 0 0 10px rgba(59,130,246,0.15),0 8px 32px rgba(0,0,0,0.35);
-  transition:transform 0.3s var(--ease2),opacity 0.35s,background 0.3s,box-shadow 0.3s;
+  transition:transform 0.3s var(--ease2),opacity 0.3s,background 0.3s,box-shadow 0.3s;
 }
 .play-btn:hover{
   transform:scale(1.12);background:var(--accent);
@@ -322,29 +300,29 @@ nav{
 }
 .play-btn svg{width:22px;height:22px;margin-left:3px;fill:#fff}
 
+/* Fullscreen button */
+.fullscreen-btn{
+  position:absolute;bottom:12px;right:12px;
+  width:34px;height:34px;border-radius:8px;
+  background:rgba(0,0,0,0.5);
+  border:1px solid rgba(255,255,255,0.2);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;opacity:0;
+  transition:opacity 0.25s, background 0.2s, transform 0.2s;
+  color:#fff;
+  backdrop-filter:blur(4px);
+}
+.fullscreen-btn svg{width:16px;height:16px;fill:currentColor}
+.video-wrap:hover .fullscreen-btn{opacity:1}
+.fullscreen-btn:hover{background:var(--accent);transform:scale(1.08)}
+
 .pause-hint{
-  position:absolute;bottom:14px;right:14px;
-  background:rgba(0,0,0,0.55);border-radius:100px;
+  position:absolute;bottom:12px;left:12px;
+  background:rgba(0,0,0,0.52);border-radius:100px;
   padding:5px 12px;font-size:0.65rem;font-weight:600;
   color:rgba(255,255,255,0.85);letter-spacing:0.06em;
   opacity:0;transition:opacity 0.3s;pointer-events:none;
-}
-
-/* Macbook bottom */
-.macbook-chin{
-  height:14px;
-  background:linear-gradient(to bottom,var(--macbook-bezel),var(--macbook-screen));
-  border-radius:0 0 5px 5px;
-  border:1.5px solid var(--border);border-top:1px solid rgba(0,0,0,0.15);
-  transition:background 0.4s;
-}
-.macbook-base{
-  height:8px;margin:0 22px;
-  background:var(--surface2);
-  border-radius:0 0 14px 14px;
-  border:1.5px solid var(--border);border-top:none;
-  box-shadow:0 8px 24px rgba(0,0,0,0.12);
-  transition:background 0.4s;
+  backdrop-filter:blur(4px);
 }
 
 /* Card info */
@@ -511,10 +489,7 @@ footer{
 
   <!-- 1 -->
   <div class="project-card">
-    <div class="macbook-wrap">
-      <div class="macbook-screen">
-        <div class="macbook-camera"></div>
-        <div class="macbook-display">
+    <div class="video-wrap">
           <video muted loop playsinline preload="metadata">
             <source src="videos/BEAUTY.mp4" type="video/mp4">
           </video>
@@ -522,10 +497,10 @@ footer{
             <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             <span class="pause-hint" data-i18n="video.pause">Click to pause</span>
           </div>
+          <button class="fullscreen-btn" title="Fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </button>
         </div>
-      </div>
-      <div class="macbook-chin"></div><div class="macbook-base"></div>
-    </div>
     <div class="card-info">
       <div>
         <h2 data-i18n="p1.title">Glamy — Natural Cosmetics E-commerce</h2>
@@ -538,10 +513,7 @@ footer{
 
   <!-- 2 -->
   <div class="project-card">
-    <div class="macbook-wrap">
-      <div class="macbook-screen">
-        <div class="macbook-camera"></div>
-        <div class="macbook-display">
+    <div class="video-wrap">
           <video muted loop playsinline preload="metadata">
             <source src="videos/FOOD.mp4" type="video/mp4">
           </video>
@@ -549,10 +521,10 @@ footer{
             <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             <span class="pause-hint" data-i18n="video.pause">Click to pause</span>
           </div>
+          <button class="fullscreen-btn" title="Fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </button>
         </div>
-      </div>
-      <div class="macbook-chin"></div><div class="macbook-base"></div>
-    </div>
     <div class="card-info">
       <div>
         <h2 data-i18n="p2.title">AURELIA Restaurant</h2>
@@ -565,10 +537,7 @@ footer{
 
   <!-- 3 -->
   <div class="project-card">
-    <div class="macbook-wrap">
-      <div class="macbook-screen">
-        <div class="macbook-camera"></div>
-        <div class="macbook-display">
+    <div class="video-wrap">
           <video muted loop playsinline preload="metadata">
             <source src="videos/gym.mp4" type="video/mp4">
           </video>
@@ -576,10 +545,10 @@ footer{
             <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             <span class="pause-hint" data-i18n="video.pause">Click to pause</span>
           </div>
+          <button class="fullscreen-btn" title="Fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </button>
         </div>
-      </div>
-      <div class="macbook-chin"></div><div class="macbook-base"></div>
-    </div>
     <div class="card-info">
       <div>
         <h2 data-i18n="p3.title">SLAYFIT — Women's Gym</h2>
@@ -592,10 +561,7 @@ footer{
 
   <!-- 4 -->
   <div class="project-card">
-    <div class="macbook-wrap">
-      <div class="macbook-screen">
-        <div class="macbook-camera"></div>
-        <div class="macbook-display">
+    <div class="video-wrap">
           <video muted loop playsinline preload="metadata">
             <source src="videos/lumiere estate.mp4" type="video/mp4">
           </video>
@@ -603,10 +569,10 @@ footer{
             <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             <span class="pause-hint" data-i18n="video.pause">Click to pause</span>
           </div>
+          <button class="fullscreen-btn" title="Fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </button>
         </div>
-      </div>
-      <div class="macbook-chin"></div><div class="macbook-base"></div>
-    </div>
     <div class="card-info">
       <div>
         <h2 data-i18n="p4.title">Lumière Estates — Real Estate Platform</h2>
@@ -619,10 +585,7 @@ footer{
 
   <!-- 5 -->
   <div class="project-card">
-    <div class="macbook-wrap">
-      <div class="macbook-screen">
-        <div class="macbook-camera"></div>
-        <div class="macbook-display">
+    <div class="video-wrap">
           <video muted loop playsinline preload="metadata">
             <source src="videos/salon.mp4" type="video/mp4">
           </video>
@@ -630,10 +593,10 @@ footer{
             <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             <span class="pause-hint" data-i18n="video.pause">Click to pause</span>
           </div>
+          <button class="fullscreen-btn" title="Fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </button>
         </div>
-      </div>
-      <div class="macbook-chin"></div><div class="macbook-base"></div>
-    </div>
     <div class="card-info">
       <div>
         <h2 data-i18n="p5.title">ÉCLAT Salon & Spa</h2>
@@ -646,10 +609,7 @@ footer{
 
   <!-- 6 -->
   <div class="project-card">
-    <div class="macbook-wrap">
-      <div class="macbook-screen">
-        <div class="macbook-camera"></div>
-        <div class="macbook-display">
+    <div class="video-wrap">
           <video muted loop playsinline preload="metadata">
             <source src="videos/twins (1).mp4" type="video/mp4">
           </video>
@@ -657,10 +617,10 @@ footer{
             <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             <span class="pause-hint" data-i18n="video.pause">Click to pause</span>
           </div>
+          <button class="fullscreen-btn" title="Fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </button>
         </div>
-      </div>
-      <div class="macbook-chin"></div><div class="macbook-base"></div>
-    </div>
     <div class="card-info">
       <div>
         <h2 data-i18n="p6.title">Twins — Photography Portfolio</h2>
@@ -673,10 +633,7 @@ footer{
 
   <!-- 7 -->
   <div class="project-card">
-    <div class="macbook-wrap">
-      <div class="macbook-screen">
-        <div class="macbook-camera"></div>
-        <div class="macbook-display">
+    <div class="video-wrap">
           <video muted loop playsinline preload="metadata">
             <source src="videos/Sakura Café — Pâtisserie & Café - Google Chrome 2026-06-29 00-35-23.mp4" type="video/mp4">
           </video>
@@ -684,10 +641,10 @@ footer{
             <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             <span class="pause-hint" data-i18n="video.pause">Click to pause</span>
           </div>
+          <button class="fullscreen-btn" title="Fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </button>
         </div>
-      </div>
-      <div class="macbook-chin"></div><div class="macbook-base"></div>
-    </div>
     <div class="card-info">
       <div>
         <h2 data-i18n="p7.title">Sakura Café — Pastry & Coffee Shop</h2>
@@ -700,10 +657,7 @@ footer{
 
   <!-- 8 -->
   <div class="project-card">
-    <div class="macbook-wrap">
-      <div class="macbook-screen">
-        <div class="macbook-camera"></div>
-        <div class="macbook-display">
+    <div class="video-wrap">
           <video muted loop playsinline preload="metadata">
             <source src="videos/maubles.mp4" type="video/mp4">
           </video>
@@ -711,10 +665,10 @@ footer{
             <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             <span class="pause-hint" data-i18n="video.pause">Click to pause</span>
           </div>
+          <button class="fullscreen-btn" title="Fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </button>
         </div>
-      </div>
-      <div class="macbook-chin"></div><div class="macbook-base"></div>
-    </div>
     <div class="card-info">
       <div>
         <h2 data-i18n="p8.title">Art Cuisine & Dressing</h2>
@@ -727,10 +681,7 @@ footer{
 
   <!-- 9 -->
   <div class="project-card">
-    <div class="macbook-wrap">
-      <div class="macbook-screen">
-        <div class="macbook-camera"></div>
-        <div class="macbook-display">
+    <div class="video-wrap">
           <video muted loop playsinline preload="metadata">
             <source src="videos/sushi3.mp4" type="video/mp4">
           </video>
@@ -738,10 +689,10 @@ footer{
             <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             <span class="pause-hint" data-i18n="video.pause">Click to pause</span>
           </div>
+          <button class="fullscreen-btn" title="Fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </button>
         </div>
-      </div>
-      <div class="macbook-chin"></div><div class="macbook-base"></div>
-    </div>
     <div class="card-info">
       <div>
         <h2 data-i18n="p9.title">SEN — Sushi & Sake</h2>
@@ -933,13 +884,15 @@ function toggleTheme(){
   document.querySelector('.icon-moon').style.display = currentTheme === 'light' ? 'block' : 'none';
 }
 
-/* ── Video hover-to-play ── */
-document.querySelectorAll('.macbook-display').forEach(display => {
-  const video = display.querySelector('video');
-  const overlay = display.querySelector('.play-overlay');
+/* ── Video: hover-to-preview, click-to-play, fullscreen ── */
+document.querySelectorAll('.video-wrap').forEach(wrap => {
+  const video = wrap.querySelector('video');
+  const overlay = wrap.querySelector('.play-overlay');
+  const fsBtn = wrap.querySelector('.fullscreen-btn');
 
-  // Click: toggle play/pause
-  display.addEventListener('click', () => {
+  // Click on wrap: toggle play/pause
+  wrap.addEventListener('click', e => {
+    if(e.target === fsBtn || fsBtn.contains(e.target)) return;
     if(video.paused){
       video.play();
       overlay.classList.add('playing');
@@ -949,18 +902,30 @@ document.querySelectorAll('.macbook-display').forEach(display => {
     }
   });
 
-  // Hover: autoplay preview
-  display.addEventListener('mouseenter', () => {
-    if(video.paused){
-      video.play().catch(()=>{});
-      // soft preview — don't switch to "playing" state (overlay still shows play btn)
-    }
+  // Hover: silent preview (don't mark as "playing")
+  wrap.addEventListener('mouseenter', () => {
+    if(video.paused) video.play().catch(()=>{});
   });
-  display.addEventListener('mouseleave', () => {
+  wrap.addEventListener('mouseleave', () => {
     if(!overlay.classList.contains('playing')){
       video.pause();
       video.currentTime = 0;
     }
+  });
+
+  // Fullscreen button
+  fsBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    if(video.requestFullscreen) video.requestFullscreen();
+    else if(video.webkitRequestFullscreen) video.webkitRequestFullscreen();
+    else if(video.mozRequestFullScreen) video.mozRequestFullScreen();
+    video.play();
+    overlay.classList.add('playing');
+  });
+
+  // When video ends
+  video.addEventListener('ended', () => {
+    overlay.classList.remove('playing');
   });
 });
 
